@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Internship - Akash M</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    background:url("pback.jpg") no-repeat center center fixed;
+    background-size:cover;
+    color:white;
+}
+
+/* overlay */
+.overlay{
+    background:linear-gradient(135deg, rgba(0,40,40,.80), rgba(0,90,120,.70));
+    min-height:100vh;
+    padding:40px 20px;
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+/* title */
+.page-title{
+    font-weight:900;
+    font-size:40px;
+    color:#00ffff;
+    text-align:center;
+    margin-bottom:30px;
+    animation:slideDown 1s ease;
+}
+
+@keyframes slideDown{
+    from{transform:translateY(-40px);opacity:0}
+    to{transform:translateY(0);opacity:1}
+}
+
+/* content box */
+.content-box{
+    max-width:900px;
+    margin:auto;
+    background:rgba(0,0,0,.35);
+    padding:35px;
+    border-radius:18px;
+    backdrop-filter:blur(6px);
+    line-height:1.8;
+    font-size:18px;
+    animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+    from{transform:translateY(40px);opacity:0}
+    to{transform:translateY(0);opacity:1}
+}
+
+/* slider style */
+.slider-box{
+    width:320px;
+    background:rgba(0,0,0,.35);
+    border-radius:40px;
+    padding:8px;
+    margin:30px auto;
+    border:2px solid #00e5ff;
+}
+
+.slider-track{
+    width:100%;
+    height:50px;
+    border-radius:40px;
+    position:relative;
+    overflow:hidden;
+}
+
+.slider-text{
+    position:absolute;
+    width:100%;
+    text-align:center;
+    line-height:50px;
+    font-weight:700;
+    color:#bffcff;
+    letter-spacing:1px;
+}
+
+.slider-thumb{
+    width:50px;
+    height:50px;
+    background:linear-gradient(45deg,#00ffd5,#00aaff);
+    border-radius:50%;
+    position:absolute;
+    top:0;
+    left:0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    color:black;
+    user-select:none;
+    touch-action:none;
+    transition:left .3s ease;
+}
+
+/* responsive */
+@media(max-width:600px){
+    .page-title{font-size:28px}
+    .content-box{font-size:16px}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<h1 class="page-title">INTERNSHIP EXPERIENCE</h1>
+
+<div class="content-box">
+
+<p><strong>Web Developer Intern — Astro Web Solutions</strong></p>
+
+<p>
+I successfully completed a 30-day onsite internship as a Web Developer Intern at Astro Web Solutions. 
+During this period, I actively contributed to frontend development tasks and gained real-time exposure 
+to professional project workflows and collaborative development environments.
+</p>
+
+<p>
+My responsibilities included building responsive web pages, developing structured user input forms, 
+and enhancing user interface layouts for better usability and visual consistency. I worked with 
+technologies such as HTML, CSS, JavaScript, and Bootstrap using Visual Studio Code as the primary 
+development environment.
+</p>
+
+<p>
+This internship strengthened my practical understanding of responsive design principles, UI improvement 
+techniques, and structured development practices. I also developed strong teamwork skills and learned 
+how real-world web projects are planned, executed, and refined in a professional setting.
+</p>
+
+<p>
+An official internship certificate was awarded upon successful completion of the program.
+</p>
+
+</div>
+
+<!-- Slide → Certificate -->
+<div class="slider-box">
+    <div class="slider-track" id="track1">
+        <div class="slider-text">Slide to View Certificate ➜</div>
+        <div class="slider-thumb" id="thumb1">➤</div>
+    </div>
+</div>
+
+<!-- Slide → Home -->
+<div class="slider-box">
+    <div class="slider-track" id="track2">
+        <div class="slider-text">Slide Back to Home ➜</div>
+        <div class="slider-thumb" id="thumb2">➤</div>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+function makeSlider(thumbId, trackId, action){
+    const thumb = document.getElementById(thumbId);
+    const track = document.getElementById(trackId);
+
+    let dragging = false;
+    let triggered = false;
+
+    function move(x){
+        const rect = track.getBoundingClientRect();
+        let pos = x - rect.left - 25;
+
+        if(pos < 0) pos = 0;
+        if(pos > rect.width - 50) pos = rect.width - 50;
+
+        thumb.style.left = pos + "px";
+
+        if(pos >= rect.width - 55 && !triggered){
+            triggered = true;
+            action();
+        }
+    }
+
+    function reset(){
+        thumb.style.left = "0px";
+        triggered = false;
+    }
+
+    // Mouse
+    thumb.addEventListener("mousedown",()=>dragging=true);
+    document.addEventListener("mouseup",()=>{
+        if(dragging) reset();
+        dragging=false;
+    });
+    document.addEventListener("mousemove",e=>{
+        if(dragging) move(e.clientX);
+    });
+
+    // Touch
+    thumb.addEventListener("touchstart",()=>dragging=true);
+    document.addEventListener("touchend",()=>{
+        if(dragging) reset();
+        dragging=false;
+    });
+    document.addEventListener("touchmove",e=>{
+        if(dragging) move(e.touches[0].clientX);
+    });
+}
+
+// First slider → internship.pdf
+makeSlider("thumb1","track1",()=>window.open("internship.pdf","_blank"));
+
+// Second slider → home.html
+makeSlider("thumb2","track2",()=>window.location="home.html");
+
+</script>
+
+</body>
+</html>

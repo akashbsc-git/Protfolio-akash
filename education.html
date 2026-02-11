@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Education - Akash M</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    background:url("pback.jpg") no-repeat center center fixed;
+    background-size:cover;
+    color:white;
+}
+
+/* overlay */
+.overlay{
+    background:linear-gradient(135deg, rgba(0,40,40,.85), rgba(0,90,120,.75));
+    min-height:100vh;
+    padding:40px 20px;
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+/* title */
+.page-title{
+    font-weight:900;
+    font-size:40px;
+    color:#00ffff;
+    text-align:center;
+    margin-bottom:30px;
+    animation:slideDown 1s ease;
+}
+
+@keyframes slideDown{
+    from{transform:translateY(-40px);opacity:0}
+    to{transform:translateY(0);opacity:1}
+}
+
+/* content box */
+.content-box{
+    max-width:950px;
+    margin:auto;
+    background:rgba(0,0,0,.35);
+    padding:35px;
+    border-radius:18px;
+    backdrop-filter:blur(6px);
+    line-height:1.9;
+    font-size:18px;
+    animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+    from{transform:translateY(40px);opacity:0}
+    to{transform:translateY(0);opacity:1}
+}
+
+.edu-title{
+    color:#00ffff;
+    font-weight:700;
+    font-size:20px;
+    margin-top:20px;
+}
+
+/* slider */
+.slider-box{
+    width:320px;
+    background:rgba(0,0,0,.35);
+    border-radius:40px;
+    padding:8px;
+    margin:40px auto;
+    border:2px solid #00e5ff;
+}
+
+.slider-track{
+    width:100%;
+    height:52px;
+    border-radius:40px;
+    position:relative;
+    overflow:hidden;
+}
+
+.slider-text{
+    position:absolute;
+    width:100%;
+    text-align:center;
+    line-height:52px;
+    font-weight:700;
+    color:#bffcff;
+    letter-spacing:1px;
+}
+
+.slider-thumb{
+    width:52px;
+    height:52px;
+    background:linear-gradient(45deg,#00ffd5,#00aaff);
+    border-radius:50%;
+    position:absolute;
+    top:0;
+    left:0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    color:black;
+    user-select:none;
+    touch-action:none;
+    transition:left .3s ease;
+}
+
+/* responsive */
+@media(max-width:600px){
+    .page-title{font-size:28px}
+    .content-box{font-size:16px}
+    .slider-box{width:90%}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<h1 class="page-title">EDUCATION</h1>
+
+<div class="content-box">
+
+<p>
+My academic journey reflects consistent growth and dedication toward building a strong foundation 
+in computer science and technology.
+</p>
+
+<div class="edu-title">🎓 Bachelor of Science in Computer Science (UG)</div>
+<p>
+Nadar Mahajana Sangam S. Vellaichami Nadar College, Madurai  
+Madurai Kamaraj University  
+Expected Graduation: 2026 (Currently Final Year)  
+Current Aggregate: 65%
+</p>
+
+<div class="edu-title">🏫 Higher Secondary Certificate (HSC)</div>
+<p>
+M.N.U. Jayaraj Nadar Higher Secondary School, Madurai  
+State Board  
+Passed Out: 2023  
+Percentage: 55.5%
+</p>
+
+<div class="edu-title">🏫 Secondary School Leaving Certificate (SSLC)</div>
+<p>
+M.N.U. Jayaraj Nadar Higher Secondary School, Madurai  
+State Board  
+Passed Out: 2021  
+Percentage: 45%
+</p>
+
+<p>
+Throughout my academic career, I have continuously developed analytical thinking, 
+problem-solving skills, and technical knowledge that support my goal of becoming a 
+professional Web and Full Stack Developer.
+</p>
+
+</div>
+
+<!-- Slide Back Home -->
+<div class="slider-box">
+    <div class="slider-track" id="track1">
+        <div class="slider-text">Slide Back to Home ➜</div>
+        <div class="slider-thumb" id="thumb1">🏠</div>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+function makeSlider(thumbId, trackId, action){
+    const thumb = document.getElementById(thumbId);
+    const track = document.getElementById(trackId);
+
+    let dragging = false;
+    let triggered = false;
+
+    function move(x){
+        const rect = track.getBoundingClientRect();
+        let pos = x - rect.left - 26;
+
+        if(pos < 0) pos = 0;
+        if(pos > rect.width - 52) pos = rect.width - 52;
+
+        thumb.style.left = pos + "px";
+
+        if(pos >= rect.width - 58 && !triggered){
+            triggered = true;
+            action();
+        }
+    }
+
+    function reset(){
+        thumb.style.left = "0px";
+        triggered = false;
+    }
+
+    thumb.addEventListener("mousedown",()=>dragging=true);
+    document.addEventListener("mouseup",()=>{
+        if(dragging) reset();
+        dragging=false;
+    });
+    document.addEventListener("mousemove",e=>{
+        if(dragging) move(e.clientX);
+    });
+
+    thumb.addEventListener("touchstart",()=>dragging=true);
+    document.addEventListener("touchend",()=>{
+        if(dragging) reset();
+        dragging=false;
+    });
+    document.addEventListener("touchmove",e=>{
+        if(dragging) move(e.touches[0].clientX);
+    });
+}
+
+/* Slider → home.html */
+makeSlider("thumb1","track1",()=>window.location="home.html");
+
+</script>
+
+</body>
+</html>
